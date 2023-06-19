@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load bootstrap4 %}
+{% block title %}
+Prijavi se
+{% endblock  %}
+
+
+{% block content %}
+<div class="container">
+    <br>
+    <h1 class="product_title text-center">
+        Prijavi se ili kreiraj novi nalog
+    </h1>
+    <div class="row">
+        <div class="col-12 col-sm-12 col-lg-6 text-center custom_div">
+            <br>
+            <h2 class="product_title">
+                Novi Kupac
+            </h2>
+            <br>
+            <p>Kada kreirate svoj nalog, možete da vidite svoju istoriju kupovine</p>
+            <br>
+            <a href="{% url 'prijava' %}" class="btn btn-secondary hover-effect2">Napravi novi nalog</a>
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 bg-light">
+            <div>
+                <h2 class="product_title">
+                    Samo registrovani kupci
+                </h2>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{form | crispy}}
+                    <button type="submit" name="button" class="btn btn-secondary hover-effect2">Prijavi se</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock  %}

@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Korpa
+{% endblock  %}
+
+{% block content %}
+{% if not korpa_proizvodi %}
+<div class="text-center">
+    <div class="text-center product_title custom_bg">
+        Tvoja šoping korpa je prazna!!
+    </div>
+    <br>
+    <p class="text-center">
+        Molimo vas kliknite <a href="{% url 'home' %}" class="link">ovdje</a> kako bi nastavili kupovinu
+    </p>
+</div>
+{% else %}
+
+<div class="text-center">
+    <div class="text-center product_title custom_bg">
+        Tvoja šoping korpa
+    </div>
+    <div class="row mx-auto">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+            <table class="table cart_table">
+                <thread class="cart_thread">
+                    <tr>
+                        <th colspan="4">
+                            MOJI PROIZVODI
+                        </th>
+                    </tr>
+                </thread>
+                {% for korpa_proizvod in korpa_proizvodi %}
+                    <tr>
+                        <td>
+                            <a href="korpa_proizvod.proizvod.get_url">
+                                <img src="{{korpa_proizvod.proizvod.slika.url}}" width="100" height="100" onmouseover="povecajSliku(this)" 
+                                    onmouseout="vratiOriginalnuSliku(this)" onclick="return false;">
+                            </a>
+                        </td>
+                        <td class="text-left">
+                            {{korpa_proizvod.proizvod.imeproizvoda}}
+                            <br>
+                            SKU: {{korpa_proizvod.proizvod.id}}
+                            <br>
+                            Cijena: KM {{korpa_proizvod.proizvod.cijena}}
+                            <br>
+                            QTY: {{korpa_proizvod.kolicina}} x {{korpa_proizvod.proizvod.cijena}}
+                        </td>
+                        <td>
+                            KM {{korpa_proizvod.sub_total}}
+                        </td>
+                        <td>
+                            <a href="{{ korpa_proizvod.proizvod.get_url }}" class="btn btn-primary hover-effect1">Brzi pregled proizvoda</a>
+                        </td>
+                        
+                        {% if korpa_proizvod.kolicina < korpa_proizvod.proizvod.akcija %}
+                        <td>
+                            &nbsp;<a href="{% url 'dodaj_korpa' korpa_proizvod.proizvod.id %}"><i class="fas fa-sharp fa-solid fa-cart-plus fa-beat" style="color: #ff7b00;"></i></a>
+                            &nbsp;<a href="{% url 'korpa_brisanje' korpa_proizvod.proizvod.id %}"><i class="fa-solid fa-circle-minus  fa-spin-pulse" style="color: #ff7b00;"></i></a>
+                            &nbsp;<a href="{% url 'korpa_brisanje_proizvod' korpa_proizvod.proizvod.id %}"><i class="fas fa-sharp fa-solid fa-trash-alt fa-fade" style="color: #ff7b00;"></i></a>
+                        </td>
+                        {% else %}
+                        <td>
+                            &nbsp;<a href="{% url 'korpa_brisanje' korpa_proizvod.proizvod.id %}"><i class="fa-solid fa-circle-minus  fa-spin-pulse" style="color: #ff7b00;"></i></a>
+                            &nbsp;<a href="{% url 'korpa_brisanje_proizvod' korpa_proizvod.proizvod.id %}"><i class="fas fa-sharp fa-solid fa-trash-alt fa-fade" style="color: #ff7b00;"></i></a>
+                        </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+            <table class="table cart_table">
+                <thread class="cart_thread">
+                    <tr>
+                        <th>
+                            PROVJERA
+                        </th>
+                    </tr>
+                </thread>
+                <tbody>
+                    <tr>
+                        <td>
+                            Provjeri svoju korpu prije nego izvršite plaćanje!!
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">
+                            Vaš ukupni iznos je: <strong>KM {{total}}</strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="mx-auto">
+                <form class="hover-effect" action="" method="POST">
+                    {% csrf_token %}
+                    <script src="https://checkout.stripe.com/checkout.js"
+                    class="stripe-button"
+                    data-key="{{ data_key }}"
+                    data-amount="{{ stripe_ukupno }}"
+                    data-name="Z-Store"
+                    data-description="{{ opis }}"
+                    data-locale="auto"
+                    data-currency="usd"
+                    data-shipping-address="true"
+                    data-billing-address="true"
+                    data-zip-code="true">
+                    </script>
+                  </form>
+                  
+                <a href="{% url 'home' %}" style="text-decoration: none;">
+                    <button type="button" class="btn btn-lg btn-block bg-dark text-white hover-effect">
+                        Nastavi kupovinu
+                    </button>
+                    
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function povecajSliku(element) {
+      element.classList.add("slika-uvecana");
+    }
+  
+    function vratiOriginalnuSliku(element) {
+      element.classList.remove("slika-uvecana");
+    }
+</script>
+
+
+{% endif %}
+{% endblock  %}

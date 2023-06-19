@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load bootstrap4 %}
+{% block title %}
+Detalji narudzbe
+{% endblock  %}
+
+{% block content %}
+<div class="container">
+    <div class="text-center">
+        <br>
+        <h1 class="text-center product_title">
+            Detalji vaše narudzbe
+        </h1>
+        <br>
+        <table class="table table-bordered">
+            <tr>
+                <td class="text-left" colspan="2">
+                    <b>Broj narudzbe: </b> #{{ narudzba.id }} <br>
+                    <b>Datum narudzbe: </b>{{ narudzba.kreirano|date:"d M Y" }} <br>
+                    <b>Ukupan iznos: </b>KM {{ narudzba.total }} <br>
+                    <b>Status narudzbe: </b><i class="fas fa-check"></i> Završeno.
+                </td>
+                <td class="text-left" colspan="2">
+                    <b>Adresa za naplatu: </b> <br>
+                    {{narudzba.billingName}} <br>
+                    {{narudzba.billingAddress1}} <br>
+                    {{narudzba.billingCity}} <br>
+                    {{narudzba.billingPostcode}} <br>
+                    {{narudzba.billingCountry}}
+                </td>
+            </tr>
+            <tr>
+                <td><b>Naziv proizvoda</b></td>
+                <td><b>Količina</b></td>
+                <td><b>Cijena</b></td>
+                <td><b>Ukupna cijena</b></td>
+            </tr>
+            {% for proizvod in narudzba_proizvodi %}
+                <tr>
+                    <td>{{ proizvod.proizvod }}</td>
+                    <td>{{ proizvod.kolicina }}</td>
+                    <td>KM {{ proizvod.cijena }}</td>
+                    <td>KM {{ proizvod.sub_total }}</td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td class="text-right" colspan="3">Ukupna cijena:</td>
+                <td>KM {{ narudzba.total }}</td>
+            </tr>
+            <tr>
+                <td class="text-right" colspan="3">Ukupno za platiti</td>
+                <td>KM {{ narudzba.total }}</td>
+            </tr>
+            <tr>
+                <td class="text-left" colspan="2">
+                    <b>Adresa za dostavu: </b> <br>
+                    {{narudzba.shippingName}}
+                    {{narudzba.shippingdAddress1}} <br>
+                    {{narudzba.shippingCity}} <br>
+                    {{narudzba.shippingPostcode}} <br>
+                    {{narudzba.shippingCountry}}
+                </td>
+                <td class="text-left" colspan="2">
+                    <b>Detalji plaćanja: </b> <br>
+                    Narudzba #{{ narudzba.id }} je uspješno plaćena.
+                </td>
+            </tr>
+        </table>
+        <button class="btn btn-secondary hover-effect2" onclick="window.print();"><i class="fas fa-print"></i> Ištampaj mi narudzbu</button>
+    </div>
+</div>
+<br><br>
+
+{% endblock  %}

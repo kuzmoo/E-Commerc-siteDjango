@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load bootstrap4 %}
+{% block title %}
+Kontaktiraj nas
+{% endblock %}
+
+{% block content %}
+<div>
+    {% if not form.is_valid %}
+    <div class="mx-auto">
+        <br>
+        <h1 class="product_title text-center">
+            Kontaktiraj nas
+        </h1>
+        <br>
+        <div class="col-9 col-sm-9 col-md-6 col-lg-5 mx-auto bg-light">
+            <br>
+            <p>Ispunite formu kako biste nas kontaktirali:</p>
+            <form method="POST">
+                {% csrf_token %}
+                <p>{{ form | crispy }}</p>
+                <button type="submit" class="btn btn-secondary hover-effect2">Pošalji</button>
+            </form>
+        </div>
+    </div>
+    {% else %}
+    <div class="mx-auto">
+        <br>
+        <h1 class="product_title text-center">
+            Poruka poslana
+        </h1>
+        <br>
+        <div class="container">
+            <p>
+                Hvala vam na poruci!
+            <br>
+            <br>
+            Vaša poruka je uspješno poslana. Obratit ćemo vam se uskoro.
+            <br>
+            <a href="{% url 'home' %}">Povratak na početnu stranicu</a>
+            </p>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

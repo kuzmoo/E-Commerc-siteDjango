@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Z-store - Nova Prodavnica
+{% endblock  %}
+
+{% block content %}
+<div class="text-center">
+    <br>
+    <br>
+    <h1 class="text-center product_title">
+        Hvala što ste naručili
+    </h1>
+    <br>
+    <br>
+    <p>Broj vaše porudžbine je: <b>{{ kupac_narudzba.id }}</b></p>
+    <br>
+    <p>
+        Primili smo vašu porudžbinu i odmah ćemo početi sa obradom. Stigla vam je potvrda putem email-a koja sadrži podatke 
+        o artiklima koje ste kupili.
+    </p>
+</div>
+{% endblock %}

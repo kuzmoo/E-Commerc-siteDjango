@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Poruka poslata
+{% endblock  %}
+
+{% block content %}
+<div>
+    <div class="mx-auto">
+        <br>
+        <h1 class="product_title text-center">
+            Poruka poslata
+        </h1>
+        <br>
+        <div class="container text-center">
+            <p>
+                Hvala vam što ste nas kontaktirali. Vaša poruka je uspešno poslata.
+            </p>
+            <br>
+            <a href="{% url 'home' %}">Povratak na početnu stranicu</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

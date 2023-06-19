@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load bootstrap4 %}
+{% block title %}
+Istorija narudzbi
+{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <br>
+    <h1 class="text-center product_title">
+        Istorija narudzbi
+    </h1>
+    <br>
+    {% if detalji_narudzbe %}
+    <table class="table table-striped">
+        <thread>
+            <tr>
+                <th>Broj narudzbe</th>
+                <th>Datum narudzbe</th>
+                <th>Ukupan iznos</th>
+                <th>Status</th>
+                <th>Akcija</th>
+            </tr>
+        </thread>
+        <tbody>
+            {% for narudzba in detalji_narudzbe %}
+                <tr>
+                    <td>{{ narudzba.id }}</td>
+                    <td>{{ narudzba.kreirano|date:"d M Y" }}</td>
+                    <td>KM {{ narudzba.total }}</td>
+                    <td><i class="fas fa-check"></i>&nbsp;Završeno</td>
+                    <td><a href="{% url 'detalji_narudzbe' narudzba.id %}">Pogledaj narudzbu</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Nemate jos nikakvih narudzbi
+        <br><br>
+        <a href="{% url 'home' %}" class="btn btn-secondary hover-effect2">Nastavi kupovinu</a>
+    </p>
+    {% endif %}
+</div>
+<br><br>
+{% endblock  %}
